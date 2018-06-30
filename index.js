@@ -44,7 +44,7 @@ express()
 
   	var params = [idVip];
 
-  	pool.query(sql, params, function(error, result) {
+  	pool.query(sql, params, function(err, result) {
   		if (err) {
   			console.log('A DB error occured');
   			console.log(err);
