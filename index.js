@@ -32,8 +32,15 @@ express()
   	console.log('retrieving VIP ID: ', idVip);
 
   	getVipFromDb(idVip, function(error, result) {
-  		console.log('Back from the getVipFrom ID function with results: ', result);
-  		res.json(result);
+      console.log('Back from the getVipFrom ID function with results: ', result);
+
+      if (error || result == null || result.length !=1) {
+        res.status(500).json({success: false, data: error});
+      } else {
+        res.json(result[0]);
+      }
+
+
   	});
   }
  
@@ -44,11 +51,11 @@ express()
 
   	var params = [idVip];
 
-  	pool.query(sql, params, function(err, result) {
-  		if (err) {
+  	pool.query(sql, params, function(error, result) {
+  		if (error) {
   			console.log('A DB error occured');
-  			console.log(err);
-  			callback(err, null);
+  			console.log(error);
+  			callback(error, null);
   		}
 
   		console.log('Found DB result: ' + JSON.stringify(result.rows));
