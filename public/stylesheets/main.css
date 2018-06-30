@@ -1,0 +1,29 @@
+body {
+  margin: 20px;
+  padding: 50px;
+  border: 50px;
+  background-color: #C0C0C0;
+  background-size: 100%;
+  font-size: 16px;
+  font-weight: bold; 
+  font-family: Bradley Hand, cursive;
+  color: #00008B;
+}
+
+h1 {
+  font-family: Bradley Hand, cursive;
+  font-size: 30px;
+  colcr: #7FFF00;
+}
+
+h2 {
+  font-family: URW Chancery L, cursive;
+  font-size: 26px;
+  colcr: #7FFF00;
+}
+
+p {
+  font-family: URW Chancery L, cursive;
+  font-size: 20px;
+  colcr: #7FFF00;
+}
