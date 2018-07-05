@@ -7,12 +7,11 @@ const { Pool } = require('pg');
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 
-
- 
-express()
+ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
   .get('/vip/:idVip', getVIP)
   .get('/', (req, res) => res.render('pages/index'))
 
@@ -39,8 +38,6 @@ express()
       } else {
         res.json(result[0]);
       }
-
-
   	});
   }
  

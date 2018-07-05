@@ -75,6 +75,3 @@ CREATE TABLE public.pets
  fav_treat 		VARCHAR(50));
 
 INSERT INTO vip(first_name, middle_name, last_name, dob, wedding_anniv) VALUES ('Charlie', 'Block Head', 'Brown', '1960-06-01', '1981-07-23');
-
-CREATE USER memoryuser WITH PASSWORD 'ugh!ugh!';
-GRANT SELECT, INSERT, UPDATE ON protected-savannah-26129 TO memoryuser;

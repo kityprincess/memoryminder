@@ -5,14 +5,13 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 <body>
+	<h1>Memory Minder</h1>
+	<h2>Your place to "remember" every important fact about your VIP.</h2>
 	<p>
-	<form action="/rates" method="get">
-		Weight (in ounces): <input type="text" id="weight" name="weight"><br>
-		<input type="radio" name="mailType" value="Letters (Stamped)">Letters (Stamped)<br>
-		<input type="radio" name="mailType" value="Letters (Metered)">Letters (Metered)<br>
-		<input type="radio" name="mailType" value="Large Envelopes (Flats)">Large Envelopes (Flats)<br>
-		<input type="radio" name="mailType" value="First-Class Package Service - Retail">First-Class Package Service - Retail<br>
-		<input type="submit" value="Check your Rate!"><br>
+	<form action="/vip" class="login" method="post">
+		User Name: <input type="text" id="username" name="username"><br>
+		Password: <input type="text" id="password" name="password"><br>
+		<input type="submit" value="Login"><br>
 	</form>
 	</p>
 </body>
