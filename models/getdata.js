@@ -24,7 +24,7 @@ function getVipFromDb(idVip, callback) {
 
 	var params = [idVip];
 
-	pool.query(sql, params, function(error, result) {
+	dbconnect.query(sql, params, function(error, result) {
 		if (error) {
 			console.log('A DB error occured');
 			console.log(error);
