@@ -1,5 +1,3 @@
-var express = require('express');
-var bodyParser = require('body-parser');
 const crypt = require('bcrypt');
 const dbconnect = require('./../dbconnect.js');
 
