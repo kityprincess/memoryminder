@@ -43,12 +43,12 @@ function newUserToDb(user, callback) {
 		if (error) {
 			console.log('A DB error occured');
 			console.log(error);
-			callback(error, null);
+		//	callback(error, null);
 		}
 
 		console.log('Inserted into DB');
 
-		callback(null, vip.js/1);
+		//callback(null, vip.js/1);
 	});
 }
 
