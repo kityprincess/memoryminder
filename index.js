@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 5000;
 
 const getdata = require('./models/getdata.js');
 const writedata = require('./models/writedata.js');
-const urlencodedParser = bodyParser.urlencoded({extended: false });
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
  express()
   .use(express.static(path.join(__dirname, 'public')))

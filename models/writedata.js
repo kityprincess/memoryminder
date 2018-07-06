@@ -10,7 +10,7 @@ function newUser(req, res) {
 	username: req.body.username
 	};
 
- 	console.log('create new user');
+ 	console.log(req.body);
 
  	crypt.hash(req.body.password, 10, function(err,hash) {
  		user.hashedPass = hash;
@@ -33,7 +33,7 @@ function newUser(req, res) {
 
 
 function newUserToDb(user, callback) {
-	console.log('send user to db: ', user.hashpass);
+	console.log('send user to db: ', user.hashedPass);
 
 	var sql = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4)';
 
@@ -48,7 +48,7 @@ function newUserToDb(user, callback) {
 
 		console.log('Inserted into DB');
 
-		callback(null, 'vip.js/1');
+		callback(null, vip.js/1);
 	});
 }
 
