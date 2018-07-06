@@ -1,7 +1,20 @@
-const dbconnect = require('./../dbconnect.js')
+const crypt = require('bcrypt');
+const dbconnect = require('./../dbconnect.js');
 
 function newUser(req, res) {
+	var user = {
+	fname: req.body.fname,
+	lname: req.body.lname, 
+	hashedPass: "",
+	username: req.body.username
+	};
+
  	console.log('create new user');
+
+ 	crypt.hash(req.body.password, 10, function(err,hash) {
+ 		user.hashedPass = hash;
+ 		newUserToDb(user);
+ 	});
 
   	// var idVip = req.params.idVip;
   	// console.log('retrieving VIP ID: ', idVip);
@@ -15,26 +28,27 @@ function newUser(req, res) {
    //      res.json(result[0]);
    //    }
   	// });
-  }
- 
-// function newUserToDb(idVip, callback) {
-// 	console.log('getVipFromDb called with ID: ', idVip);
+  };
 
-// 	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
 
-// 	var params = [idVip];
+function newUserToDb(user, callback) {
+	console.log('send user to db: ', user.hashpass);
 
-// 	dbconnect.query(sql, params, function(error, result) {
-// 		if (error) {
-// 			console.log('A DB error occured');
-// 			console.log(error);
-// 			callback(error, null);
-// 		}
+	var sql = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4)';
 
-// 		console.log('Found DB result: ' + JSON.stringify(result.rows));
+	var params = [user.username, user.hashpass, user.fname, user.lname];
 
-// 		callback(null, result.rows);
-// 	});
-// }
+	dbconnect.query(sql, params, function(error, result) {
+		if (error) {
+			console.log('A DB error occured');
+			console.log(error);
+			callback(error, null);
+		}
+
+		console.log('Inserted into DB');
+
+		callback(null, 'vip.js/1');
+	});
+}
 
 module.exports = {newUser:newUser};
