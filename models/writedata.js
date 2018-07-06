@@ -3,7 +3,7 @@ const dbconnect = require('./../dbconnect.js');
 
 function newUser(req, res) {
 	var user = {
-	fname: req.body.fname,
+	//fname: req.body.fname,
 	lname: req.body.lname, 
 	hashedPass: "",
 	username: req.body.username
