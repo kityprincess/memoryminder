@@ -1,6 +1,8 @@
+var express = require('express');
+var bodyParser = require('body-parser');
 const crypt = require('bcrypt');
 const dbconnect = require('./../dbconnect.js');
-var bodyParser = require('body-parser');
+
 
 function newUser(req, res) {
 	var user = {
