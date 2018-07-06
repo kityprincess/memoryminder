@@ -38,7 +38,7 @@ function newUserToDb(user, callback) {
 
 	var sql = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4)';
 
-	var params = [user.username, user.hashpass, user.fname, user.lname];
+	var params = [user.username, user.hashedPass, user.fname, user.lname];
 
 	dbconnect.query(sql, params, function(error, result) {
 		if (error) {
