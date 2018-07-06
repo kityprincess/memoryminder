@@ -14,6 +14,7 @@ function newUser(req, res) {
 
  	crypt.hash(req.body.password, 10, function(err,hash) {
  		user.hashedPass = hash;
+ 		console.log(hash);
  		newUserToDb(user);
  	});
 
