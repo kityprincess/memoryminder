@@ -1,4 +1,5 @@
 const dbconnect = require('./../dbconnect.js')
+const crypt = require('bcrypt');
 
 function getVIP(req, res) {
  	console.log('getting vip');
@@ -37,4 +38,17 @@ function getVipFromDb(idVip, callback) {
 	});
 }
 
+// function getUser(userId, callback) {
+// 	//console.log('checking user in db: ' req.body.username);
+
+//  	crypt.compare(req.body.password, hash, function(err,res) {
+//  		//if yes, go to vip.ejs
+
+//  		//if no, repost page with error
+//  	});
+
+// 	var sql = ''
+// }
+
 module.exports = {getVIP:getVIP};
+//module.exports = {getUser:getUser};

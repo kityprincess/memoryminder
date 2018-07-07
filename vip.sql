@@ -3,14 +3,13 @@ DROP TABLE public.preferences 		CASCADE;
 DROP TABLE public.employment 		CASCADE;
 DROP TABLE public.family 			CASCADE;
 DROP TABLE public.contact 			CASCADE;
-DROP TABLE public.vipInfo			CASCADE;
 DROP TABLE public.vip 				CASCADE;
 DROP TABLE public.vipuser 			CASCADE;
 
 CREATE TABLE public.vipuser
 (id SERIAL PRIMARY KEY NOT NULL,
  username 		VARCHAR(30) NOT NULL UNIQUE,
- password 		VARCHAR(100) NOT NULL UNIQUE,
+ password 		TEXT NOT NULL UNIQUE,
  first_name 	VARCHAR(30) NOT NULL,
  last_name 		VARCHAR(40) NOT NULL);
 
@@ -73,5 +72,13 @@ CREATE TABLE public.pets
  type 			VARCHAR(20),
  dob 			DATE,
  fav_treat 		VARCHAR(50));
+
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 INSERT INTO vip(first_name, middle_name, last_name, dob, wedding_anniv) VALUES ('Charlie', 'Block Head', 'Brown', '1960-06-01', '1981-07-23');
