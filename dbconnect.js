@@ -1,3 +1,4 @@
+var async = require("async");
 const { Pool } = require('pg');
 
 const connectionString = process.env.DATABASE_URL;
