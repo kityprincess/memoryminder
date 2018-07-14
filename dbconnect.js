@@ -3,6 +3,10 @@ const { Pool } = require('pg');
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 
+const begin_transaction = 'begin';
+const rollback_transaction = 'rollback';
+const commit_transaction = 'commit';
+
 // allows simpler implementation for multiple db queries
 // https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
 exports.waterfall = function waterfall (tasks, cb) {
