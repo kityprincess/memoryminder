@@ -5,16 +5,16 @@ const pool = new Pool({connectionString: connectionString});
 
 // allows simpler implementation for multiple db queries
 // https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
-exports.waterfall = function waterfall (tasks, callback) {
-    pg.dbconnect(connstring, function (err, client, done) {
+exports.waterfall = function waterfall (tasks, cb) {
+    pool.connect(function (err, client, done) {
         if (err) {
-            return callback(err);
+            return cb(err);
         }
  
         client.query(begin_transaction, function (err) {
             if (err) {
                 done();
-                return callback(err);
+                return cb(err);
             }
              
             var wrapIterator = function (iterator) {
@@ -22,7 +22,7 @@ exports.waterfall = function waterfall (tasks, callback) {
                     if (err) {
                         client.query(rollback_transaction, function () {
                             done();
-                            callback(err);
+                            cb(err);
                         });
                     }
                     else {
@@ -39,13 +39,13 @@ exports.waterfall = function waterfall (tasks, callback) {
                                 if (err) {
                                     client.query(rollback_transaction, function () {
                                         done();
-                                        callback(err);
+                                        cb(err);
                                     });
                                 }
                                 else {
                                     client.query(commit_transaction, function () {
                                         done();
-                                        callback.apply(null, args);
+                                        cb.apply(null, args);
                                     })
                                 }
                             })
@@ -61,4 +61,5 @@ exports.waterfall = function waterfall (tasks, callback) {
     });
 }
 
-module.exports = pool;
+//module.exports.pool = pool;
+//module.exports.waterfall = waterfall;

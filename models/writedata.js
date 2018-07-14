@@ -1,6 +1,6 @@
 const crypt = require('bcrypt');
 const dbconnect = require('./../dbconnect.js');
-const waterfall = require('./../dbconnect.js');
+//const waterfall = require('./waterfall.js');
 
 function newUser(req, res) {
 	var user = {
@@ -275,4 +275,4 @@ function newVIP(req, res) {
 	// };
 }
 
-module.exports = {newUser:newUser};
+module.exports.newUser = newUser;
