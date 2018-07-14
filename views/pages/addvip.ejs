@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include ../partials/header.ejs %>
+        <script type="text/javascript" src="../models/addfamily.js"></script>
+      </head>
+    <body>
+<!-- <?php
+$dbUrl = getenv('DATABASE_URL');
+
+$dbopts = parse_url($dbUrl);
+
+$dbHost = $dbopts["host"];
+$dbPort = $dbopts["port"];
+$dbUser = $dbopts["user"];
+$dbPassword = $dbopts["pass"];
+$dbName = ltrim($dbopts["path"],'/');
+
+$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+//http://www.postgresqltutorial.com/postgresql-php/transaction/
+
+try{ 
+$db->beginTransaction();  
+
+//insert data into recipe table
+  if (isset($_POST['name']) && isset($_POST['instructions'])) {
+  $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+  $instructions  = filter_input(INPUT_POST, 'instructions', FILTER_SANITIZE_STRING);
+  $lines = explode("\r\n", $instructions);
+  $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING);
+
+  $stmt = $db->prepare('INSERT INTO recipe (name, instructions, category) VALUES (:name, :instructions, :category) ON CONFLICT (name) DO UPDATE SET name = recipe.name RETURNING id;');
+
+  $stmt->bindValue(':name', $name);
+  $stmt->bindValue(':instructions', json_encode($lines));
+  $stmt->bindValue(':category', $category);
+  $stmt->execute();
+
+  //get recipe ID
+  $result = $stmt->fetch();
+  $recipe_id = $result['id'];
+}
+
+//insert data into ingredients table 
+if (isset($_POST['qty']) && isset($_POST['unit']) && isset($_POST['ingredient'])) {
+
+  $quantities  = filter_input(INPUT_POST, 'qty', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+  $units       = filter_input(INPUT_POST, 'unit',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+  $ingredients = filter_input(INPUT_POST, 'ingredient', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+  
+  $insertData = array();
+
+  for ($i = 0; $i < count($quantities); $i++) {
+    array_push($insertData, array(
+    'qty'        => $quantities[$i],
+    'unit'       => $units[$i],
+    'ingredient' => $ingredients[$i]  
+  ));
+  }
+
+  $stmt = $db->prepare('INSERT INTO ingredients (description) VALUES (:insertData) RETURNING id;');
+
+  $stmt->bindValue(':insertData', json_encode($insertData));
+  $stmt->execute();
+
+//get ingredients ID 
+  $iResult = $stmt->fetch();
+  $ingredients_id = $iResult['id'];
+}
+
+//insert data into recipe_ingredients table 
+  if (isset($recipe_id) && isset($ingredients_id)){
+
+  $stmt = $db->prepare('INSERT INTO recipe_ingredients (recipe_id, ingredients_id) VALUES (:recipe_id, :ingredients_id);');
+  
+  $stmt->bindValue('recipe_id', $recipe_id);
+  $stmt->bindValue('ingredients_id', $ingredients_id);
+  $stmt->execute();  
+}
+
+    $db->commit();
+
+    //$row = $stmt->fetch();
+    // echo 'Congratulations! Your recipe has been entered!';
+    // echo '<a href="recipeDetails.php?id=' . $recipe_id . '">' . $recipe_id . '</a>';
+  } 
+  catch (Exception $e) {
+    $db->rollBack();
+    echo $e;
+  }     
+?> -->
+
+    <div class = "table">
+      <form action="/vipdetails" method="post">
+          <h1>Add your VIP</h1>
+          <fieldset class="row1">
+            <label for="fname">First Name:</label>
+            <input type="text" name="fname" required="required" id="fname">
+            <label for="mname">Middle Name:</label>
+            <input type="text" name="mname" id="mname">
+            <label for="lname">Last Name:</label>
+            <input type="text" name="lname" id="lname">
+            <label for="dob">Birthday:</label>
+            <input type="date" name="dob" id="dob">
+            <label for="wedAnniv">Wedding Anniversary:</label>
+            <input type="date" name="wedAnniv" id="wedAnniv">
+          </fieldset>
+          <fieldset class="row2">
+              <legend>Contact Information</legend>
+              <input type="tel" name="phone" id="phone" placeholder="Phone Number">
+              <select name="phoneType" id="phoneType">
+                <option value="cell">Cell</option>
+                <option value="home">Home</option>
+                <option value="business">Business</option>
+              </select>
+              <input type="email" name="email" id="email" placeholder="Email Address">
+              <input type="text" name="addy1" id="addy1" placeholder="Address">
+              <input type="text" name="addy2" id="addy2" placeholder="Address Line 2">
+              <input type="text" name="city" id="city" placeholder="City">
+              <input type="text" name="state" id="state" placeholder="State">
+              <input type="number" name="zip" id="zip" placeholder="Zip">
+              <input type="text" name="country" id="country" placeholder="Country">
+          </fieldset>
+          <fieldset class="row3">
+            <legend>Family Members</legend>
+            <input type="button" value="Add Family Member" onClick="addRow('ingTable')" />
+            <input type="button" value="Remove Family Member" onClick="deleteRow('ingTable')" />    
+            <table id="ingTable" class="form" border="1">
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" required="required" name="chk[]" checked="checked" /></td>
+                  <td><input type="text" name="fname[]" required="required" id="fname" placeholder="First Name"></td>
+                  <td><input type="text" name="mname[]" id="mname" placeholder="Middle Name"></td>
+                  <td><input type="text" name="lname[]" id="lname" placeholder="Last Name"></td>
+                  <td><input type="text" name="lname[]" id="lname" placeholder="Last Name"></td>
+                  <td><input type="text" name="relate[]" id="relate" placeholder="Relationship"></td>
+                  <td><input type="date" name="fdob[]" id="fdob" placeholder="Birthday"></td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+          <fieldset class="row4">
+              <legend>Employment Information</legend>
+              <input type="text" name="ename" id="ename" placeholder="Employer Name">
+              <input type="date" name="workAnniv" id="workAnniv" placeholder="Work Anniversary">
+              <input type="text" name="title" id="title" placeholder="Title">
+              <input type="text" name="jobDesc" id="jobDesc" placeholder="Job Description">
+              <input type="text" name="manager" id="manager" placeholder="Manager">
+          </fieldset>
+          <fieldset class="row5">
+              <legend>Preferences</legend>
+              <input type="text" name="favcolor" id="favcolor" placeholder="Favorite Color">
+              <input type="text" name="favsport" id="favsport" placeholder="Favorite Sport">
+              <input type="text" name="favteam" id="favteam" placeholder="Favorite Artist">
+              <input type="text" name="favrest" id="favrest" placeholder="Favorite Restaurant">
+              <input type="text" name="favmusic" id="favmusic" placeholder="Favorite Music">
+              <input type="text" name="favtvshow" id="favtvshow" placeholder="Favorite TV Show">
+          </fieldset>    
+          <fieldset class="row6">
+              <legend>Pets</legend>
+              <input type="text" name="pname" id="pname" placeholder="Pets Name">
+              <input type="text" name="ptype" id="ptype" placeholder="Type of Pet">
+              <input type="date" name="pdob" id="pdob" placeholder="Birthday">
+              <input type="text" name="favtreat" id="favtreat" placeholder="Favorite Treat">
+          </fieldset>                     
+          <input class="submit" type="submit" value="Add new VIP"/>
+      </form>
+    </div>
+  </body>
+</html>

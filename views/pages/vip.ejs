@@ -9,7 +9,7 @@
 
 <body>
     <h1>All you needed to remember about your VIP!<br/></h1>
-    // To do list all VIPs associated with user
+    <!-- To do list all VIPs associated with user -->
     <legend>VIP</legend>
 	<form action="/newVIP" class="login" method="post">
 	First Name: <input type="text" id="fname" name="fname"><br> 
@@ -19,11 +19,14 @@
 	Wedding Anniversary: <input type="date" id="wedDate" name="wedDate"><br><br>
 	<legend>VIP Contact Details</legend>
 	Phone: <input type="tel" id="phone" name="phone"><br>
-	//TODO Phone Type should be drop down from existing DB data
-	Phone Type: <input type="text" id="pType" name="pType"><br>
+	<select name="Phone Type">
+		<option value="cell">Cell</option>
+		<option value="home">Home</option>
+		<option value="business">Business</option>
+	</select>
 	Email: <input type="email" id="name" name="name"><br>
 	Address: <input type="text" id="addy1" name="addy1"><br>
-	Address: <input type="text" id="addy2" name="addy2"><br>
+	Address 2: <input type="text" id="addy2" name="addy2"><br>
 	City: <input type="text" id="city" name="city"><br>
 	State: <input type="text" id="state" name="state"><br>
 	Zip: <input type="text" id="zip" name="zip"><br>
