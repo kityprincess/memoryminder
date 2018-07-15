@@ -17,6 +17,7 @@ function newUser(req, res) {
  		user.hashedPass = hash;
  		//console.log(hash);
  		newUserToDb(user, function(err, results){
+			console.log('did we make it to the end?');
 			console.log(results);
 			console.log(err);
 			// need to add the user ID for the logged in user to the session
