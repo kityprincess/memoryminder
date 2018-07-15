@@ -56,13 +56,8 @@ function newUserToDb(user, callback) {
 	
 	var vip_user_id;
 	var userparams = [user.username, user.hashedPass, user.fname, user.lname];
-	//var contactparams = [id, user.phone, user.email];
-
 	var usersql   = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4) RETURNING id';
-	//var contactsql = 'INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)';
 
-	// allows simpler implementation for multiple db queries
-	// https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
 	dbconnect.tx(t => {
 		return t.one(usersql, userparams, x=>+x.id)
 			.then(id => {
@@ -73,46 +68,12 @@ function newUserToDb(user, callback) {
 	})
 	.then(data => {
 		console.log('saved user to DB');
+		callback(null, data);
 	})
 	.catch(error => {
 		console.log('Error: ', error);
+		callback(error, null);
 	});
-
-	// var vip_user_id;
-	
-	// dbconnect.begin_transaction(userparams, function(error, result) {
-	// 	if (error) {
-	// 		console.log('A DB error occured');
-	// 		console.log(error);
-	// 		callback(error, null);
-	// 	}
-	
-		
-	// 	var usersql = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4) RETURNING id';
-	// 	// do this in javascript / node, not PHP
-	// 	var vip_user_id = results.id;		
-
-	// 	//can I nest the next sql stmt? If not, need to occur async (after results)
-	// 	// dbconnect.query(contactsql, params)
-	// 	console.log('Inserted into User Table');
-
-	// 	callback(null, results);
-	// });
-
-	// var contactsql = 'INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)';z
-	// var contactparams = [vip_user_id, user.phone, user.email];
-
-	// dbconnect.query(contactsql, contactparams, function(error, result) {
-	// 	if (error) {
-	// 		console.log('A DB error occured');
-	// 		console.log(error);
-	// 		callback(error, null);
-	// 	}
-
-	// 	console.log('Inserted into Contact Table');
-
-	// 	callback(null, results);
-	// });
 };
 
 function newVIP(req, res) {
