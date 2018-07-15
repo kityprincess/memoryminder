@@ -65,7 +65,7 @@ function newUserToDb(user, callback) {
 	dbconnect.tx(t => {
 		return t.one(usersql, userparams, x=>+x.id)
 			.then(id => {
-				return t.none(contactsql, contactparams)
+				return t.none('INSERT INTO contact(vip_user_id, phone, email) VALUES (id, user.phone, user.email)')
 			});
 	})
 	.then(data => {
