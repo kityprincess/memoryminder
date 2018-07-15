@@ -55,7 +55,7 @@ function newUserToDb(user, callback) {
 	
 	var vip_user_id;
 	var userparams = [user.username, user.hashedPass, user.fname, user.lname];
-	var contactparams = [vip_user_id, user.phone, user.email];
+	var contactparams = [id, user.phone, user.email];
 
 	var usersql   = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4) RETURNING id';
 	var contactsql = 'INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)';
@@ -63,10 +63,10 @@ function newUserToDb(user, callback) {
 	// allows simpler implementation for multiple db queries
 	// https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
 	dbconnect.tx(t => {
-		return t.batch([
-			t.none(usersql, userparams),
-			vip_user_id = data[0].id,
-            t.none(contactsql, contactparams)
+		return t.one(usersql, userparams, x=>+x.id)
+			.then(id => {
+				return t.none(contactsql, contactparams)
+			})
 		]);
 	})
 	.then(data => {
