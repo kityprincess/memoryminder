@@ -66,8 +66,7 @@ function newUserToDb(user, callback) {
 		return t.one(usersql, userparams, x=>+x.id)
 			.then(id => {
 				return t.none(contactsql, contactparams)
-			})
-		]);
+			});
 	})
 	.then(data => {
 		console.log('saved user to DB: ', data[0].id);
