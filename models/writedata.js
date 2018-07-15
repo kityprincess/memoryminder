@@ -66,7 +66,8 @@ function newUserToDb(user, callback) {
 		return t.one(usersql, userparams, x=>+x.id)
 			.then(id => {
 				var contactparams = [id, user.phone, user.email];
-				return t.none('INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)')
+				var contactsql = 'INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)';
+				return t.none(contactsql, contactparams)
 			});
 	})
 	.then(data => {
