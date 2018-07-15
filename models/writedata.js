@@ -53,17 +53,17 @@ function newUser(req, res) {
 function newUserToDb(user, callback) {
 	console.log('send user to db');
 	
-	var vip_user_id;
-	var userparams = [user.username, user.hashedPass, user.fname, user.lname];
+	//var vip_user_id;
+	//var userparams = [user.username, user.hashedPass, user.fname, user.lname];
 	//var contactparams = [id, user.phone, user.email];
 
-	var usersql   = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4) RETURNING id';
+	//var usersql   = 'INSERT INTO vipuser(username, password, first_name, last_name) VALUES ($1,$2,$3,$4) RETURNING id';
 	//var contactsql = 'INSERT INTO contact(vip_user_id, phone, email) VALUES ($1, $2, $3)';
 
 	// allows simpler implementation for multiple db queries
 	// https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
 	dbconnect.tx(t => {
-		return t.one(usersql, userparams, x=>+x.id)
+		return t.one('INSERT INTO vipuser(username, password, first_name, last_name) VALUES (user.username, user.hashedPass, user.fname, user.lname) RETURNING id', x=>+x.id)
 			.then(id => {
 				return t.none('INSERT INTO contact(vip_user_id, phone, email) VALUES (id, user.phone, user.email)')
 			});
