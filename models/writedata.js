@@ -62,7 +62,7 @@ function newUserToDb(user, callback) {
 
 	// allows simpler implementation for multiple db queries
 	// https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
-	dbconnect.tx(t => {
+	db.tx(t => {
 		return t.batch([
 			t.none(usersql, userparams),
 			vip_user_id = data[0].id,
