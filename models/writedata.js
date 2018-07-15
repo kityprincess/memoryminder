@@ -1,6 +1,5 @@
 const crypt = require('bcrypt');
 const dbconnect = require('./../dbconnect.js');
-//const waterfall = require('./waterfall.js');
 
 function newUser(req, res) {
 	var user = {
@@ -63,15 +62,19 @@ function newUserToDb(user, callback) {
 
 	// allows simpler implementation for multiple db queries
 	// https://baudehlo.com/2014/04/28/node-js-multiple-query-transactions/
-	dbconnect.waterfall([
-        function (client, callback) {
-            client.query(usersql, userparams, callback);
-        },
-        function (client, results, callback) {
-            vip_user_id = results.rows[0].id;
-            client.query(contactsql, contactparams, callback);
-        },
-    ], callback);
+	dbconnect.tx(t => {
+		return t.batch([
+			t.none(usersql, userparams),
+			vip_user_id = data[0].id,
+            t.none(contactsql, contactparams)
+		]);
+	})
+	.then(data => {
+		console.log('saved user to DB: ' data[0].id);
+	})
+	.catch(error => {
+		console.log('Error: ', error);
+	});
 
 	// var vip_user_id;
 	
