@@ -8,6 +8,6 @@
 const pgp = require('pg-promise')({});
 const cn = process.env.DATABASE_URL;
 
-const db = pgp(cn);
+const dbconnect = pgp(cn);
 
 module.exports = dbconnect;
