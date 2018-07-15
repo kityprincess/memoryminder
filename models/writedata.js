@@ -71,7 +71,7 @@ function newUserToDb(user, callback) {
 			});
 	})
 	.then(data => {
-		console.log('saved user to DB: ');
+		console.log('saved user to DB');
 	})
 	.catch(error => {
 		console.log('Error: ', error);
