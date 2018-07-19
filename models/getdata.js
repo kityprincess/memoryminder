@@ -74,17 +74,28 @@ function getUserFromDb(username, callback) {
 
 	var params = [username];
 
-	dbconnect.query(sql, params, function(error, result) {
-		if (error) {
+	dbconnect.oneOrNone(sql, params)
+		.then(function(data){
+			console.log('Found DB result: ' + JSON.stringify(result.rows));
+
+			callback(null, result.rows);
+		})
+		.catch(function(error){
 			console.log('A DB error occured');
 			console.log(error);
 			callback(error, null);
-		}
+		});
+	// dbconnect.query(sql, params, function(error, result) {
+	// 	if (error) {
+	// 		console.log('A DB error occured');
+	// 		console.log(error);
+	// 		callback(error, null);
+	// 	}
 
-		console.log('Found DB result: ' + JSON.stringify(result.rows));
+	// 	console.log('Found DB result: ' + JSON.stringify(result.rows));
 
-		callback(null, result.rows);
-	});
+	// 	callback(null, result.rows);
+	// });
 }
 
 module.exports.getVIP = getVIP;
