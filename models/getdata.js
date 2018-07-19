@@ -65,7 +65,7 @@ function getUserFromDb(username, callback) {
 
 	var sql = 'SELECT id, username, password, first_name, last_name FROM public.vip WHERE id = $1';
 
-	var params = [user];
+	var params = [username];
 
 	dbconnect.query(sql, params, function(error, result) {
 		if (error) {
