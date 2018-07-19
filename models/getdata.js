@@ -37,9 +37,9 @@ function getVipFromDb(callback) {
 			callback(error, null);
 		}
 
-		console.log('Found DB result: ' + JSON.stringify(result.rows));
+		console.log('Found DB result: ' + JSON.stringify(result));
 
-		callback(null, result.rows);
+		callback(null, result);
 	});
 }
 
@@ -76,9 +76,9 @@ function getUserFromDb(username, callback) {
 
 	dbconnect.oneOrNone(sql, params)
 		.then(function(result){
-			console.log('Found DB result: ' + JSON.stringify(result.rows));
+			console.log('Found DB result: ' + JSON.stringify(result));
 
-			callback(null, result.rows);
+			callback(null, result);
 		})
 		.catch(function(error){
 			console.log('A DB error occured');
