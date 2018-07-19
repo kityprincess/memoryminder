@@ -24,7 +24,6 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
   .get('/vip/:userId', getdata.getVIP)
   .post('/userlogin', urlencodedParser, getdata.getUser)
   .post('/newuser', urlencodedParser, writedata.newUser)
-  // //.get('/', (req, res) => res.render('pages/index'))
   .get('/addvip', (req, res) => res.render('pages/addvip'))
 
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
