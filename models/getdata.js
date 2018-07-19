@@ -52,13 +52,13 @@ function getUser(req, res) {
 	getUserFromDb(username, function(error, result) {
 		console.log('Back from the getUserFromDb function with results: ', result.id);
 
-		res.render('pages/vip/' + result[0].id);
+		res.render('pages/vip/' + result.id);
   
 		if (error || result == null || result.length !=1) {
 		  res.status(500).json({success: false, data: error});
 		} 
 		else {
-			crypt.compare(password, result[0].password, function(err, res) {
+			crypt.compare(password, result.password, function(err, res) {
 				if (error) {
 					console.log('Bad User name or password');
 				} else {
