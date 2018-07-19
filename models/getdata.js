@@ -4,43 +4,43 @@ const crypt = require('bcrypt');
 function getVIP(req, res) {
  	console.log('getting vip');
 
-  	//var idVip = req.params.idVip;
-	//console.log('retrieving VIP ID: ', idVip);
-	console.log('retrieving VIPs');
+  	var idVip = req.params.idVip;
+	console.log('retrieving VIP ID: ', idVip);
 
-  	//getVipFromDb(idVip, function(error, result) {
-	getVipFromDb(function(error, result) {
+  	getVipFromDb(idVip, function(error, result) {
       console.log('Back from the getVipFrom');
 
       if (error || result == null || result.length !=1) {
         res.status(500).json({success: false, data: error});
       } else {
-        res.json(result[0]);
+		res.render('pages/vip', function(req, res){
+			vip: result[0];
+		})
+        //res.json(result[0]);
       }
   	});
   }
  
 //function getVipFromDb(idVip, callback) {
-function getVipFromDb(callback) {
+function getVipFromDb(callback) {	
 	console.log('getVipFromDb called');
 
-	//var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
-	//var sql = 'SELECT * FROM public.vip';
+	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip';
 
 	//var params = [idVip];
 
-	//dbconnect.query(sql, params, function(error, result) {
-	dbconnect.query('SELECT * FROM public.vip', function(error, result) {
-		if (error) {
+	//dbconnect.any(sql, params)
+	dbconnect.any(sql)
+		.then(function(result){
+			console.log('Found DB result: ' + JSON.stringify(result));
+
+			callback(null, result);
+		})
+		.catch(function(error){
 			console.log('A DB error occured');
 			console.log(error);
 			callback(error, null);
-		}
-
-		console.log('Found DB result: ' + JSON.stringify(result));
-
-		callback(null, result);
-	});
+		});
 }
 
 function getUser(req, res) {
@@ -56,15 +56,15 @@ function getUser(req, res) {
 		  res.status(500).json({success: false, data: error});
 		} 
 		else {
-			// crypt.compare(password, result[0].password, function(err, res) {
-			// 	if (error) {
-			// 		console.log('Bad User name or password');
-			// 	}
-			// 	res.render('pages/vip/' + result[0].id)
-			// })
-			res.render('pages/vip/')
+			crypt.compare(password, result[0].password, function(err, res) {
+				if (error) {
+					console.log('Bad User name or password');
+				} else {
+				res.render('pages/vip/' + result[0].id)
+				}
+			});
 		}
-	 })
+	 });
 };
 
 function getUserFromDb(username, callback) {
@@ -85,17 +85,6 @@ function getUserFromDb(username, callback) {
 			console.log(error);
 			callback(error, null);
 		});
-	// dbconnect.query(sql, params, function(error, result) {
-	// 	if (error) {
-	// 		console.log('A DB error occured');
-	// 		console.log(error);
-	// 		callback(error, null);
-	// 	}
-
-	// 	console.log('Found DB result: ' + JSON.stringify(result.rows));
-
-	// 	callback(null, result.rows);
-	// });
 }
 
 module.exports.getVIP = getVIP;
