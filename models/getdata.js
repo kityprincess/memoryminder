@@ -26,7 +26,8 @@ function getVipFromDb(idVip, callback) {
 
 	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE vip_user_id = $1::int';
 
-	var params = [userId];
+	// var params = [userId];
+	var params = [1];
 
 	dbconnect.any(sql, params)
 		.then(function(result){
@@ -62,11 +63,12 @@ function getUser(req, res) {
 				}
 			});
 		}
+		console.log('going to vip list');
 		//res.render('pages/vip/' + result.id)
-		//res.render('pages/vip')
-		res.render('pages/vip', function(req, res){
-			userId: result.id;
-		})
+		res.render('pages/vip')
+		// res.render('pages/vip', function(req, res){
+		// 	userId: result.id;
+		// })
 	 });
 };
 
