@@ -5,6 +5,7 @@ DROP TABLE public.family 			CASCADE;
 DROP TABLE public.contact 			CASCADE;
 DROP TABLE public.vip 				CASCADE;
 DROP TABLE public.vipuser 			CASCADE;
+DROP TABLE public.session 			CASCADE;
 
 CREATE TABLE public.vipuser
 (id SERIAL PRIMARY KEY NOT NULL,
@@ -81,4 +82,6 @@ CREATE TABLE "session" (
 WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
 
-INSERT INTO vip(first_name, middle_name, last_name, dob, wedding_anniv) VALUES ('Charlie', 'Block Head', 'Brown', '1960-06-01', '1981-07-23');
+
+INSERT INTO vip(vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv) VALUES ('1', 'Charlie', 'Block Head', 'Brown', '1960-06-01', '1981-07-23');
+INSERT INTO vip(vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv) VALUES ('2', 'Susan', 'Marie', 'Black', '1980-06-01', '2001-07-23');

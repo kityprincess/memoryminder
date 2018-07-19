@@ -60,12 +60,12 @@ function getUser(req, res) {
 				if (error) {
 					console.log('Bad User name or password');
 				} else {
-				
+					console.log('succesfully logged in')
 				}
 			});
 		}
-
-		res.render('pages/vip/' + result.id)
+		//res.render('pages/vip/' + result.id)
+		res.render('pages/vip/')
 	 });
 };
 
