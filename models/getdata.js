@@ -10,7 +10,7 @@ function getVIP(req, res) {
 
   	//getVipFromDb(idVip, function(error, result) {
 	getVipFromDb(function(error, result) {
-      console.log('Back from the getVipFrom ID function with results: ', result);
+      console.log('Back from the getVipFrom');
 
       if (error || result == null || result.length !=1) {
         res.status(500).json({success: false, data: error});
@@ -20,14 +20,17 @@ function getVIP(req, res) {
   	});
   }
  
-function getVipFromDb(idVip, callback) {
-	console.log('getVipFromDb called with ID: ', idVip);
+//function getVipFromDb(idVip, callback) {
+function getVipFromDb(callback) {
+	console.log('getVipFromDb called');
 
-	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
+	//var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
+	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip';
 
-	var params = [idVip];
+	//var params = [idVip];
 
-	dbconnect.query(sql, params, function(error, result) {
+	//dbconnect.query(sql, params, function(error, result) {
+	dbconnect.query(sql, function(error, result) {
 		if (error) {
 			console.log('A DB error occured');
 			console.log(error);
