@@ -38,17 +38,47 @@ function getVipFromDb(idVip, callback) {
 	});
 }
 
-// function getUser(userId, callback) {
-// 	//console.log('checking user in db: ' req.body.username);
+function getUser(req, res) {
+	console.log('checking user in db: ', req.body.username);
 
-//  	crypt.compare(req.body.password, hash, function(err,res) {
-//  		//if yes, go to vip.ejs
+	var username = req.body.username;
+	var password = req.body.password
 
-//  		//if no, repost page with error
-//  	});
+	getUserFromDb(username, function(error, result) {
+		console.log('Back from the getUserFromDb function with results: ', result);
+  
+		if (error || result == null || result.length !=1) {
+		  res.status(500).json({success: false, data: error});
+		} else {
+			crypt.compare(password, rows[0].password, function(err, res) {
+				if (error) {
+					console.log('Bad User name or password');
+				}
+				res.render('pages/vip/' + result.rows[0].id)
+			})
+		}
+	 })
+};
 
-// 	var sql = ''
-// }
+function getUserFromDb(username, callback) {
+	console.log('getUserFromDb called with user: ', username);
 
-module.exports = {getVIP:getVIP};
-//module.exports = {getUser:getUser};
+	var sql = 'SELECT id, username, password, first_name, last_name FROM public.vip WHERE id = $1';
+
+	var params = [user];
+
+	dbconnect.query(sql, params, function(error, result) {
+		if (error) {
+			console.log('A DB error occured');
+			console.log(error);
+			callback(error, null);
+		}
+
+		console.log('Found DB result: ' + JSON.stringify(result.rows));
+
+		callback(null, result.rows);
+	});
+}
+
+module.exports.getVIP = getVIP;
+module.exports.getUser = getUser;

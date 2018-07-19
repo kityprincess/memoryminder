@@ -116,6 +116,7 @@ function newVIP(req, res) {
 		
 		res.render('pages/vip')
 	 });
+	}
 
 
 	function newVipToDb(user, callback) {
