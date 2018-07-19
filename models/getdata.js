@@ -75,7 +75,7 @@ function getUserFromDb(username, callback) {
 	var params = [username];
 
 	dbconnect.oneOrNone(sql, params)
-		.then(function(data){
+		.then(function(result){
 			console.log('Found DB result: ' + JSON.stringify(result.rows));
 
 			callback(null, result.rows);
