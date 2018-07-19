@@ -10,7 +10,7 @@ function getVIP(req, res) {
   	getVipFromDb(userId, function(error, result) {
       console.log('Back from getVipFrom');
 
-      if (error || result == null || result.length !=1) {
+      if (error || result == null) {
         res.status(500).json({success: false, data: error});
       } else {
 		res.render('pages/vip', function(req, res){
@@ -52,7 +52,7 @@ function getUser(req, res) {
 
 		//res.render('pages/vip/' + result.id);
   
-		if (error || result == null || result.length !=1) {
+		if (error || result == null) {
 		  res.status(500).json({success: false, data: error});
 		} 
 		else {
