@@ -50,8 +50,6 @@ function getUser(req, res) {
 	getUserFromDb(username, function(error, result) {
 		console.log('Back from the getUserFromDb function with results: ', result.id);
 
-		//res.render('pages/vip/' + result.id);
-  
 		if (error || result == null) {
 		  res.status(500).json({success: false, data: error});
 		} 
@@ -65,7 +63,10 @@ function getUser(req, res) {
 			});
 		}
 		//res.render('pages/vip/' + result.id)
-		res.render('pages/vip')
+		//res.render('pages/vip')
+		res.render('pages/vip', function(req, res){
+			userId: result.id;
+		})
 	 });
 };
 
