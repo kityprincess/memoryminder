@@ -21,8 +21,7 @@ function getVIP(req, res) {
   	});
   }
  
-//function getVipFromDb(idVip, callback) {
-function getVipFromDb(callback) {	
+function getVipFromDb(idVip, callback) {
 	console.log('getVipFromDb called');
 
 	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE vip_user_id = $1::int';
@@ -51,7 +50,7 @@ function getUser(req, res) {
 	getUserFromDb(username, function(error, result) {
 		console.log('Back from the getUserFromDb function with results: ', result.id);
 
-		res.render('pages/vip/' + result.id);
+		//res.render('pages/vip/' + result.id);
   
 		if (error || result == null || result.length !=1) {
 		  res.status(500).json({success: false, data: error});
