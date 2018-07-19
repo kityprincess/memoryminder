@@ -51,6 +51,8 @@ function getUser(req, res) {
 
 	getUserFromDb(username, function(error, result) {
 		console.log('Back from the getUserFromDb function with results: ', result);
+
+		res.render('pages/vip/' + result[0].id);
   
 		if (error || result == null || result.length !=1) {
 		  res.status(500).json({success: false, data: error});
