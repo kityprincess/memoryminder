@@ -21,13 +21,13 @@ function getVIP(req, res) {
   	});
   }
  
-function getVipFromDb(idVip, callback) {
+function getVipFromDb(userId, callback) {
 	console.log('getVipFromDb called');
 
 	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE vip_user_id = $1::int';
 
 	// var params = [userId];
-	var params = [1];
+	var params = [userId];
 
 	dbconnect.any(sql, params)
 		.then(function(result){
