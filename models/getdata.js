@@ -63,7 +63,7 @@ function getUser(req, res) {
 function getUserFromDb(username, callback) {
 	console.log('getUserFromDb called with user: ', username);
 
-	var sql = 'SELECT id, username, password, first_name, last_name FROM public.vip WHERE username = fwash';
+	var sql = 'SELECT id, username, password, first_name, last_name FROM public.vipuser WHERE username = $1';
 
 	var params = [username];
 
