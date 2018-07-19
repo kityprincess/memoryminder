@@ -21,7 +21,7 @@ function getVIP(req, res) {
 function getVipFromDb(idVip, callback) {
 	console.log('getVipFromDb called with ID: ', idVip);
 
-	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1';
+	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
 
 	var params = [idVip];
 
@@ -63,11 +63,11 @@ function getUser(req, res) {
 function getUserFromDb(username, callback) {
 	console.log('getUserFromDb called with user: ', username);
 
-	console.log("SELECT id, username, password, first_name, last_name FROM public.vipuser WHERE username = '$1'");
-
 	var sql = "SELECT id, username, password, first_name, last_name FROM public.vipuser WHERE username = '$1'";
 
 	var params = [username];
+
+	console.log($1);
 
 	dbconnect.query(sql, params, function(error, result) {
 		if (error) {
