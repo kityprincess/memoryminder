@@ -50,7 +50,7 @@ function getUser(req, res) {
 	var password = req.body.password
 
 	getUserFromDb(username, function(error, result) {
-		console.log('Back from the getUserFromDb function with results: ', result[1]);
+		console.log('Back from the getUserFromDb function with results: ', result[0]);
 
 		res.render('pages/vip/' + result[0].id);
   
