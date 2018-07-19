@@ -65,7 +65,7 @@ function getUser(req, res) {
 			});
 		}
 		//res.render('pages/vip/' + result.id)
-		res.render('pages/vip/')
+		res.render('pages/vip')
 	 });
 };
 
