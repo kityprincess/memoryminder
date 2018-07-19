@@ -21,7 +21,7 @@ function getVIP(req, res) {
 function getVipFromDb(idVip, callback) {
 	console.log('getVipFromDb called with ID: ', idVip);
 
-	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1::int';
+	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE id = $1';
 
 	var params = [idVip];
 
