@@ -4,10 +4,12 @@ const crypt = require('bcrypt');
 function getVIP(req, res) {
  	console.log('getting vip');
 
-  	var idVip = req.params.idVip;
-  	console.log('retrieving VIP ID: ', idVip);
+  	//var idVip = req.params.idVip;
+	//console.log('retrieving VIP ID: ', idVip);
+	console.log('retrieving VIPs');
 
-  	getVipFromDb(idVip, function(error, result) {
+  	//getVipFromDb(idVip, function(error, result) {
+	getVipFromDb(function(error, result) {
       console.log('Back from the getVipFrom ID function with results: ', result);
 
       if (error || result == null || result.length !=1) {
@@ -50,11 +52,11 @@ function getUser(req, res) {
 		if (error || result == null || result.length !=1) {
 		  res.status(500).json({success: false, data: error});
 		} else {
-			crypt.compare(password, rows[0].password, function(err, res) {
+			crypt.compare(password, result[0].password, function(err, res) {
 				if (error) {
 					console.log('Bad User name or password');
 				}
-				res.render('pages/vip/' + result.rows[0].id)
+				res.render('pages/vip/' + result[0].id)
 			})
 		}
 	 })
@@ -63,7 +65,7 @@ function getUser(req, res) {
 function getUserFromDb(username, callback) {
 	console.log('getUserFromDb called with user: ', username);
 
-	var sql = "SELECT id, username, password, first_name, last_name FROM public.vipuser WHERE username = $1::text";
+	var sql = "SELECT id, username, password, first_name, last_name FROM public.vipuser WHERE username = $1";
 
 	var params = [username];
 
