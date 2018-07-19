@@ -4,17 +4,17 @@ const crypt = require('bcrypt');
 function getVIP(req, res) {
  	console.log('getting vip');
 
-  	var idVip = req.params.idVip;
-	console.log('retrieving VIP ID: ', idVip);
+  	var userId = req.params.userId;
+	console.log('retrieving VIPs for user: ', userId);
 
-  	getVipFromDb(idVip, function(error, result) {
-      console.log('Back from the getVipFrom');
+  	getVipFromDb(userId, function(error, result) {
+      console.log('Back from getVipFrom');
 
       if (error || result == null || result.length !=1) {
         res.status(500).json({success: false, data: error});
       } else {
 		res.render('pages/vip', function(req, res){
-			vip: result[0];
+			vip: result;
 		})
         //res.json(result[0]);
       }
@@ -25,12 +25,11 @@ function getVIP(req, res) {
 function getVipFromDb(callback) {	
 	console.log('getVipFromDb called');
 
-	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip';
+	var sql = 'SELECT id, vip_user_id, first_name, middle_name, last_name, dob, wedding_anniv FROM public.vip WHERE vip_user_id = $1::int';
 
-	//var params = [idVip];
+	var params = [userId];
 
-	//dbconnect.any(sql, params)
-	dbconnect.any(sql)
+	dbconnect.any(sql, params)
 		.then(function(result){
 			console.log('Found DB result: ' + JSON.stringify(result));
 
@@ -62,7 +61,7 @@ function getUser(req, res) {
 				if (error) {
 					console.log('Bad User name or password');
 				} else {
-				res.render('pages/vip/' + result[0].id)
+				res.render('pages/vip/' + result.id)
 				}
 			});
 		}
