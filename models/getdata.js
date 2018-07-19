@@ -51,12 +51,13 @@ function getUser(req, res) {
   
 		if (error || result == null || result.length !=1) {
 		  res.status(500).json({success: false, data: error});
-		} else {
-			crypt.compare(password, result[0].password, function(err, res) {
-				if (error) {
-					console.log('Bad User name or password');
-				}
-				res.render('pages/vip/' + result[0].id)
+		} 
+		// else {
+		// 	crypt.compare(password, result[0].password, function(err, res) {
+		// 		if (error) {
+		// 			console.log('Bad User name or password');
+		// 		}
+				res.render('pages/vip/')
 			})
 		}
 	 })
