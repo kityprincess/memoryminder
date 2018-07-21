@@ -64,6 +64,11 @@ function getUser(req, res) {
 			});
 		}
 
+		console.log('going to getVip: ' , result.id);
+
+		getVip(result.id, function(error, results) {
+			console.log('i still dont want to see this');
+		});
 		//res.render('pages/vip/' + result.id)
 		//res.render('pages/vip')
 		// res.render('pages/vip', function(req, res){
@@ -71,11 +76,7 @@ function getUser(req, res) {
 		// })
 	 });
 
-	 console.log('going to getVip: ' , result.id);
 
-	 getVip(result.id, function(error, results) {
-		 console.log('i still dont want to see this');
-	 });
 };
 
 function getUserFromDb(username, callback) {
