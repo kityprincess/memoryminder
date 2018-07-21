@@ -1,7 +1,7 @@
 const dbconnect = require('./../dbconnect.js')
 const crypt = require('bcrypt');
 
-function getVIP(req, res) {
+function getVip(req, res) {
  	console.log('getting vip');
 
   	var userId = req.params.userId;
@@ -64,6 +64,11 @@ function getUser(req, res) {
 			});
 		}
 
+		console.log('going to getVip: ' , result.id);
+
+		getVip(1, function(error, results) {
+			console.log('i still dont want to see this');
+		});
 		//res.render('pages/vip/' + result.id)
 		//res.render('pages/vip')
 		// res.render('pages/vip', function(req, res){
@@ -72,11 +77,6 @@ function getUser(req, res) {
 	 });
 
 
-	 console.log('going to getVip: ' , 1);
-
-	 getVip(1, function(error, results) {
-		 console.log('i still dont want to see this');
-	 });
 };
 
 function getUserFromDb(username, callback) {
@@ -99,5 +99,5 @@ function getUserFromDb(username, callback) {
 		});
 }
 
-module.exports.getVIP = getVIP;
+module.exports.getVip = getVip;
 module.exports.getUser = getUser;
