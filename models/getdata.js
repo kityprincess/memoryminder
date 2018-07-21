@@ -8,17 +8,19 @@ function getVip(req, res) {
 	console.log('retrieving VIPs for user: ', userId);
 
   	getVipFromDb(userId, function(error, result) {
+      console.log('Back from getVipFrom');
+
       if (error || result == null) {
         res.status(500).json({success: false, data: error});
       } else {
-		console.log('Back from getVipFrom');
+		console.log('getVipFromDb results: ', result);
+		res.render('pages/vip', function(req, res){
+			vip: result;
+		})
         //res.json(result[0]);
-	  }
-	  });
-	res.render('pages/vip', function(req, res){
-		vip: result;
-	});
-  }
+      }
+  	});
+}
  
 function getVipFromDb(userId, callback) {
 	console.log('getVipFromDb called');
