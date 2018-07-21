@@ -66,7 +66,7 @@ function getUser(req, res) {
 
 		console.log('going to getVip: ' , result.id);
 
-		getVip(result.id, function(error, results) {
+		getVip(1, function(error, results) {
 			console.log('i still dont want to see this');
 		});
 		//res.render('pages/vip/' + result.id)
