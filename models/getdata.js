@@ -2,7 +2,7 @@ const dbconnect = require('./../dbconnect.js')
 const crypt = require('bcrypt');
 
 function getVip(req, res) {
- 	console.log('getting vip: ' , result.id);
+ 	console.log('getting vip: ' , req);
 
   	var userId = req.params.userId;
 	console.log('retrieving VIPs for user: ', userId);
