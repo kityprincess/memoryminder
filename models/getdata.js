@@ -4,7 +4,7 @@ const crypt = require('bcrypt');
 function getVip(req, res) {
  	console.log('getting vip: ' , req);
 
-  	var userId = req.params.userId;
+  	var userId = req;
 	console.log('retrieving VIPs for user: ', userId);
 
   	getVipFromDb(userId, function(error, result) {
