@@ -72,7 +72,7 @@ function getUser(req, res) {
 	 });
 
 
-	 console.log('going to getVip: ' , result.id);
+	 console.log('going to getVip: ' , 1);
 
 	 getVip(1, function(error, results) {
 		 console.log('i still dont want to see this');
